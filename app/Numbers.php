@@ -8,7 +8,7 @@ class Numbers extends Model
 {
     public function contacts()
     {
-        return $this->belongsTo('App\Contact', 'contact_id');
+        return $this->belongsTo('App\Contact');
 //        return $this->belongsTo(Contact::class);
     }
 }

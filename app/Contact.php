@@ -8,7 +8,7 @@ class Contact extends Model
 {
     public function numbers()
     {
-        return $this->hasMany('App\Numbers', 'contact_id');
+        return $this->hasMany('App\Numbers');
 //        return $this->hasMany(Numbers::class);
     }
 }

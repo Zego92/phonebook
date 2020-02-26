@@ -34,7 +34,7 @@
                                     <td>{{ $k +1 }}</td>
                                     <td>{{ $contact->name }}</td>
                                     <td>{{ $contact->surname }}</td>
-                                    <td>{{ $numbers->phone }}</td>
+                                    <td>{{ $contact->phone }}</td>
                                     <td>
                                         <a href="{{ route('contact.show', $contact->id) }}" class="btn btn-sm btn-outline-info rounded-circle"><i class="fas fa-question"></i></a>
                                         <a href="{{ route('contact.edit', $contact->id) }}" class="btn btn-sm btn-outline-success rounded-circle"><i class="fas fa-edit"></i></a>

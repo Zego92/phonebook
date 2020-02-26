@@ -6,7 +6,6 @@ use App\Contact;
 use App\Numbers;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
@@ -17,15 +16,10 @@ class ContactController extends Controller
      */
     public function index()
     {
-//        $contacts = Contact::paginate(5);
-//        $numbers = Numbers::paginate(5);
-//        $numbers = Numbers::find(1);
-//        $contacts = Contact::all()->where('id', $numbers->contact_id);
-        $contacts = Numbers::find(1)->contacts->get();
-
-
+//        $numbers = Numbers::with('contacts')->get();
+        $contacts = Contact::with('numbers')->get();
         dd($contacts);
-        return view('contact.index', compact('contacts', 'numbers'));
+        return view('contact.index', compact('contacts'));
     }
 
     /**
@@ -61,7 +55,7 @@ class ContactController extends Controller
         $id = $contact->id;
         $numbers = new Numbers();
         $numbers->phone = $request->phone;
-        $numbers->contact_id = $id;
+        $numbers->contacts_id = $id;
         $numbers->save();
         Toastr::success('Контакт Успешно Создан :)', 'Успех');
         return redirect()->route('contact.index');

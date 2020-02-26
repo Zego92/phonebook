@@ -15,9 +15,9 @@ class CreateNumbersTable extends Migration
     {
         Schema::create('numbers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('contact_id');
+            $table->unsignedBigInteger('contacts_id');
             $table->string('phone')->unique();
-            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
+            $table->foreign('contacts_id')->references('id')->on('contacts')->onDelete('cascade');
             $table->timestamps();
         });
     }
