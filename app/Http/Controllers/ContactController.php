@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use App\Numbers;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
@@ -15,9 +17,15 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::paginate(5);
-        $count = Contact::all()->count();
-        return view('contact.index', compact('contacts', 'count'));
+//        $contacts = Contact::paginate(5);
+//        $numbers = Numbers::paginate(5);
+//        $numbers = Numbers::find(1);
+//        $contacts = Contact::all()->where('id', $numbers->contact_id);
+        $contacts = Numbers::find(1)->contacts->get();
+
+
+        dd($contacts);
+        return view('contact.index', compact('contacts', 'numbers'));
     }
 
     /**
@@ -42,14 +50,19 @@ class ContactController extends Controller
             'name' => ['required', 'string', 'min:3', 'max:20'],
             'surname' => ['required', 'string', 'min:3', 'max:20'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:contacts'],
-            'phone' => ['required', 'string', 'min:10', 'max:20', 'unique:contacts'],
+            'phone' => ['required', 'string', 'min:10', 'max:20', 'unique:numbers'],
         ]);
         $contact = new Contact();
+
         $contact->name = $request->name;
         $contact->surname = $request->surname;
         $contact->email = $request->email;
-        $contact->phone = $request->phone;
         $contact->save();
+        $id = $contact->id;
+        $numbers = new Numbers();
+        $numbers->phone = $request->phone;
+        $numbers->contact_id = $id;
+        $numbers->save();
         Toastr::success('Контакт Успешно Создан :)', 'Успех');
         return redirect()->route('contact.index');
     }
@@ -62,6 +75,7 @@ class ContactController extends Controller
      */
     public function show($id)
     {
+//        $numbers = Numbers::find(1);
         $contact = Contact::find($id);
         return view('contact.show', compact('contact'));
     }
