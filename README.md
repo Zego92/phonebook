@@ -27,6 +27,31 @@ Laravel has the most extensive and thorough [documentation](https://laravel.com/
 
 If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
+##Getting Started
+
+1) <p><strong>git clone https://github.com/Zego92/phonebook.git</strong></p>
+
+2) <p><strong>cd phonebook</strong></p>
+
+3) <p><strong>In terminal type 'composer install'</strong> </p>
+
+4) <p><strong>In terminal type 'npm install --save'</strong> </p>
+
+5) <p><strong>In a root dir rename .env.example file to .env</strong> </p>
+
+6) <p><strong>In terminal type 'php artisan key:generate'</strong> </p>
+
+7) <p><strong>Configure connection to DB in .env file</strong> </p>
+
+8) <p><strong>In terminal type 'php artisan migrate'</strong> </p>
+
+9) <p><strong>In terminal type 'npm run watch'</strong> </p>
+
+10) <p><strong>Last step 'php artisan serve'</strong> </p>
+
+11) <p><strong>Enjoy</strong> </p>
+
+
 ## Laravel Sponsors
 
 We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
