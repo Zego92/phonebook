@@ -99,7 +99,7 @@ class ContactController extends Controller
         $contact->email = $request->email;
         $contact->phone = $request->phone;
         $contact->update();
-        Toastr::success('Контак Успешно Обновлен :)', 'Успех');
+        Toastr::success('Контакт Успешно Обновлен :)', 'Успех');
         return redirect()->route('contact.index');
     }
 
@@ -113,7 +113,7 @@ class ContactController extends Controller
     {
         $contact = Contact::find($id);
         $contact->delete();
-        Toastr::success('Контакс Успешно Удален :)', 'Успех');
+        Toastr::success('Контакт Успешно Удален :)', 'Успех');
         return redirect()->route('contact.index');
     }
 }
