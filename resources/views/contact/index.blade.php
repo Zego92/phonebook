@@ -60,6 +60,7 @@
                                 </tfoot>
                             </table>
                         </div>
+                        {{ $contacts->links() }}
                     </div>
                     <div class="card-footer bg-primary">
                         <span class="text-white">Контактов всего: {{ $count }}</span>
