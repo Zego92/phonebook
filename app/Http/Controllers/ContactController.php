@@ -88,7 +88,9 @@ class ContactController extends Controller
     public function edit($id)
     {
         $contact = Contact::find($id);
-        return view('contact.edit', compact('contact'));
+        $numbers = Numbers::where('contact_id', $id)->get();
+//        dd($numbers);
+        return view('contact.edit', compact('contact', 'numbers'));
     }
 
     /**
@@ -104,22 +106,14 @@ class ContactController extends Controller
             'name' => ['required', 'string', 'min:3', 'max:20'],
             'surname' => ['required', 'string', 'min:3', 'max:20'],
             'email' => ['required', 'string', 'email', 'max:255'],
-            'phone' => ['required', 'string', 'min:10', 'max:20'],
         ]);
         $contact = Contact::find($id);
         $contact->name = $request->name;
         $contact->surname = $request->surname;
         $contact->email = $request->email;
-        $contact->phone = $request->phone;
-        if ($contact->update()){
-            Toastr::success('Контакт Успешно Обновлен :)', 'Успех');
-            return redirect()->route('contact.index');
-        }
-        else {
-            Toastr::error('Произошла ошибка :)', 'Ошибка');
-            return redirect()->route('contact.index');
-        }
-
+        $contact->update();
+        Toastr::success('Контакт Успешно Обновлен :)', 'Успех');
+        return redirect()->route('contact.index');
 
     }
 

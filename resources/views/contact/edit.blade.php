@@ -49,16 +49,6 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold" for="phone">Телефон</label>
-                            <input type="tel" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ $contact->phone }}" minlength="10" maxlength="20" aria-describedby="phoneHelp" required>
-                            <small id="phoneHelp" class="form-text text-muted">Например +380999999999</small>
-                            @error('phone')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
                             <button type="submit" class="btn btn-block btn-outline-success font-weight-bold">Обновить</button>
                             <a href="{{ route('contact.index') }}" class="btn btn-block btn-outline-danger font-weight-bold">Назад</a>
                         </div>
