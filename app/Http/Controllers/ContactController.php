@@ -16,9 +16,12 @@ class ContactController extends Controller
      */
     public function index()
     {
-//        $numbers = Numbers::with('contacts')->get();
-        $contacts = Contact::with('numbers')->get();
-        dd($contacts);
+//        $numbers = Numbers::with('contact')->paginate(5);
+//        foreach ($numbers as $number){
+//            dd($number->contact->name);
+//        }
+        $contacts = Contact::paginate(25);
+//
         return view('contact.index', compact('contacts'));
     }
 
@@ -52,10 +55,9 @@ class ContactController extends Controller
         $contact->surname = $request->surname;
         $contact->email = $request->email;
         $contact->save();
-        $id = $contact->id;
         $numbers = new Numbers();
         $numbers->phone = $request->phone;
-        $numbers->contacts_id = $id;
+        $numbers->contact_id = $contact->id;
         $numbers->save();
         Toastr::success('Контакт Успешно Создан :)', 'Успех');
         return redirect()->route('contact.index');
@@ -69,9 +71,12 @@ class ContactController extends Controller
      */
     public function show($id)
     {
-//        $numbers = Numbers::find(1);
+        $numbers = Numbers::where('contact_id', $id)->get();
+        $count = Numbers::where('contact_id', $id)->count();
+
         $contact = Contact::find($id);
-        return view('contact.show', compact('contact'));
+//        dd($count);
+        return view('contact.show', compact('contact', 'numbers', 'count'));
     }
 
     /**
@@ -106,17 +111,42 @@ class ContactController extends Controller
         $contact->surname = $request->surname;
         $contact->email = $request->email;
         $contact->phone = $request->phone;
-        $contact->update();
-        Toastr::success('Контакт Успешно Обновлен :)', 'Успех');
-        return redirect()->route('contact.index');
+        if ($contact->update()){
+            Toastr::success('Контакт Успешно Обновлен :)', 'Успех');
+            return redirect()->route('contact.index');
+        }
+        else {
+            Toastr::error('Произошла ошибка :)', 'Ошибка');
+            return redirect()->route('contact.index');
+        }
+
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+    public function add(Request $request, $id)
+    {
+        $this->validate($request, [
+            'phone' => ['required', 'string', 'min:10', 'max:20']
+        ]);
+        $contact = Contact::find($id);
+        $numbers = new Numbers();
+        $numbers->contact_id = $contact;
+        $numbers->phone = $request->phone;
+        if ($numbers->save())
+        {
+            Toastr::success('Телефон Успешно Добавлен :)', 'Успех');
+            return redirect()->route('contact.show');
+        }
+        else
+        {
+            Toastr::error('Произошла ошибка :)', 'Ошибка');
+            return redirect()->route('contact.show');
+        }
+
+
+    }
+
     public function destroy($id)
     {
         $contact = Contact::find($id);
